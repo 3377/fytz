@@ -1,0 +1,15 @@
+xxx.com {
+#tls /srv/owncert/fullchain.pem /srv/owncert/privkey.key
+  root * /var/www/fytz
+  encode zstd gzip
+  file_server
+
+  @path {
+    path /api/* /ws
+  }
+
+  reverse_proxy @path https://哪吒探针地址 {
+    header_up Host {upstream_hostport}
+    header_up -Origin
+  }
+}
